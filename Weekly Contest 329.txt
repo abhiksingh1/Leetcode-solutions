@@ -1,0 +1,84 @@
+
+
+2544. Alternating Digit Sum
+
+class Solution {
+public:
+    int alternateDigitSum(int n) {
+        string s = to_string(n);
+        int odd = 0, even = 0;
+        for(int i = 0; i < s.size(); i++){
+            if(i%2 == 0){
+                even += (s[i]-'0');
+            }else{
+                odd += (s[i]-'0');
+            }
+        }
+        return even-odd;
+    }
+};
+
+
+2545. Sort the Students by Their Kth Score
+
+
+class Solution {
+public:
+    vector<vector<int>> sortTheStudents(vector<vector<int>>& score, int k) {
+        sort(score.begin(), score.end(), [k](auto &a, auto &b){
+            return a[k] > b[k];
+        });
+        return score;
+    }
+};
+
+
+
+2546. Apply Bitwise Operations to Make Strings Equal
+
+
+class Solution {
+public:
+    bool makeStringsEqual(string s, string target) {
+        int ns = 0, nt = 0;
+        for(auto i : s){
+            if(i == '1')ns++;
+        }
+        for(auto i : target){
+            if(i == '1')nt++;
+        }
+        return (ns == nt) || (ns && nt);
+    }
+};
+
+2547. Minimum Cost to Split an Array
+
+class Solution {
+public:
+    int dp[1001], split[1001][1001];
+    int minCost(vector<int>& nums, int k) {
+        int n = nums.size();
+        for(int i = 0; i < n; i++){
+            unordered_map<int, int> mp;
+            int trim = 0;
+            for(int j = i; j < n; j++){
+                mp[nums[j]]++;
+                if(mp[nums[j]] == 2) trim += 2;
+                else if(mp[nums[j]] > 2) trim++;
+                split[i][j] = trim;
+            }
+        }
+        memset(dp, -1, sizeof dp);
+        return rec(nums, k, 0);
+    }
+    int rec(vector<int>& nums, int k, int indx){
+        if(indx >= nums.size()) return 0;
+        if(dp[indx] != -1) return dp[indx];
+        int score = INT_MAX;
+        for(int i = indx; i < nums.size(); i++){
+            int curr = k+split[indx][i] + rec(nums, k, i+1);
+            score = min(score, curr);
+        }
+        return dp[indx] = score;
+    }
+};
