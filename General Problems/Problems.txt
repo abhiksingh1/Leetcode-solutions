@@ -1,0 +1,29 @@
+
+
+472. Concatenated Words
+
+class Solution {
+public:
+    vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
+        unordered_set<string> st(words.begin(), words.end());
+        vector<string> ans;
+        for(auto w : words){
+            vector<bool> taken(w.size());
+            if(rec(w, 0, taken, st)){
+                ans.push_back(w);
+            }
+        }
+        return ans;
+    }
+    bool rec(string &w, int sz, vector<bool>&taken, unordered_set<string>&st){
+        if(sz == w.size()) return true;
+        if(taken[sz]) return false;
+        taken[sz] = true;
+        for(int i = w.size()-(sz == 0 ? 1 : 0); i > sz; i--){
+            if(st.count(w.substr(sz, i-sz)) && rec(w, i, taken, st)){
+                return true;
+            }
+        }
+        return false;
+    }
+};
