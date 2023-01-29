@@ -65,3 +65,54 @@ public:
  * obj->addNum(val);
  * vector<vector<int>> param_2 = obj->getIntervals();
  */
+
+
+ 460. LFU Cache
+
+ class LFUCache {
+public:
+  int cap, id;
+  unordered_map<int, tuple<int,int,int>> table;         
+  set<tuple<int,int,int>>st;                            
+  
+  LFUCache(int capacity) {
+    cap = capacity, id = 0;
+  }
+    
+  int get(int key) {
+    if(table.count(key)){
+      auto [freq, old_id, val] = table[key];
+      st.erase({freq, old_id, key});
+      st.insert({++freq, ++id, key});
+      table[key] = {freq, id, val};
+      return val;
+    }
+    return -1;
+  }
+    
+  void put(int key, int value) {
+    if(cap == 0) return;
+    if(table.count(key)){
+      auto [freq, old_id, val] = table[key];
+      st.erase({freq, old_id, key});
+      st.insert({++freq, ++id, key});
+      table[key] = {freq, id, value};
+    }
+    else {
+      if(cap == table.size()){
+        auto [freq, old_id, old_key] = *st.begin();
+        st.erase(*st.begin());
+        table.erase(old_key);
+      }
+      st.insert({1, ++id, key});
+      table[key] = {1, id, value};
+    }
+  }
+};
+
+/**
+ * Your LFUCache object will be instantiated and called as such:
+ * LFUCache* obj = new LFUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
