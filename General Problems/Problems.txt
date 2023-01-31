@@ -136,3 +136,28 @@ public:
         return d;
     }
 };
+
+
+1626. Best Team With No Conflicts
+
+class Solution {
+public:
+    int bestTeamScore(vector<int>& scores, vector<int>& ages) {
+        vector<pair<int, int>> vec;
+        int n = scores.size();
+        for(int i = 0; i < n; i++){
+            vec.push_back({ages[i], scores[i]});
+        }
+        sort(vec.begin(), vec.end());
+        vector<vector<int>> dp(n, vector<int>(n, -1));
+        return rec(vec, dp, -1, 0);
+    }
+    int rec(vector<pair<int, int>>&vec, vector<vector<int>>&dp, int prev, int i){
+        if(i >= vec.size()) return 0;
+        if(dp[prev+1][i] != -1) return dp[prev+1][i];
+        if(prev == -1 || vec[i].second >= vec[prev].second){
+            return dp[prev+1][i] = max(rec(vec, dp, prev, i+1), vec[i].second+rec(vec, dp, i, i+1));
+        }
+        return dp[prev+1][i] = rec(vec, dp, prev, i+1);
+    }
+};
