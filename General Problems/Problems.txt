@@ -193,3 +193,28 @@ public:
         return true;
     }
 };
+
+
+6. Zigzag Conversion
+
+class Solution {
+public:
+    string convert(string s, int numrows) {
+        if(numrows == 1) return s;
+        string ans = "";
+        int n = s.size(), sz = 2*(numrows-1);
+        for(int i = 0; i < numrows; i++){
+            int indx = i;
+            while(indx < n){
+                ans += s[indx];
+                if(i != 0 && i != numrows-1){
+                    int space = sz-2*i;
+                    int sindx = indx+space;
+                    if(sindx < n) ans += s[sindx];
+                }
+                indx += sz;
+            }
+        }
+        return ans;
+    }
+};
