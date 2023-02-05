@@ -240,3 +240,24 @@ public:
         return false;
     }
 };
+
+
+438. Find All Anagrams in a String
+
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string &p) {
+        int m = s.size(), n = p.size();
+        vector<int> ans;
+        if(n > m)return ans;
+        vector<int> vp(26, 0), vs(26, 0);
+        for(int i = 0; i < n; i++)vp[p[i]-'a']++;
+        for(int i = 0; i < n; i++)vs[s[i]-'a']++;
+        if(vp == vs)ans.push_back(0);
+        for(int i = 1; i < m-n+1; i++){
+            vs[s[i+n-1]-'a']++; vs[s[i-1]-'a']--;
+            if(vs == vp)ans.push_back(i);
+        }
+        return ans;
+    }
+};
