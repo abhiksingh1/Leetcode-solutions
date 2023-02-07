@@ -274,3 +274,26 @@ public:
         return ans;
     }
 };
+
+904. Fruit Into Baskets
+
+class Solution {
+public:
+    int totalFruit(vector<int>& s) {
+        int n = s.size(), k = 2;
+        if(n*k == 0)return 0;
+        int l = 0, r = 0, ans = 1;
+        map<int, int> mp;
+        while(r < n){
+            mp[s[r]] = r; r++;
+            if(mp.size() == k+1){
+                int l_indx = INT_MAX;
+                for(pair<int, int> i : mp)l_indx = min(l_indx, i.second);
+                mp.erase(s[l_indx]);
+                l = l_indx+1;
+            }
+            ans = max(ans, r - l);
+        }
+        return ans;
+    }
+};
