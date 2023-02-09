@@ -313,3 +313,27 @@ public:
         return ans;
     }
 };
+
+
+2306. Naming a Company
+
+class Solution {
+public:
+    long long distinctNames(vector<string>& ideas) {
+        unordered_set<string> us[26];
+        for(auto& idea : ideas) us[idea[0]-'a'].insert(idea.substr(1));
+        long long ans = 0;
+        for(int i = 0; i < 25; i++){
+            for(int j = i+1; j < 26; j++){
+                int mutual = 0;
+                for(auto &idea1 : us[i]){
+                    if(us[j].count(idea1)){
+                        mutual++;
+                    }
+                }
+                ans += 2LL*(us[i].size()-mutual)*(us[j].size()-mutual);
+            }
+        }
+        return ans;
+    }
+};
