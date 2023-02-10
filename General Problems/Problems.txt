@@ -337,3 +337,37 @@ public:
         return ans;
     }
 };
+
+
+
+1162. As Far from Land as Possible
+
+class Solution {
+public:
+    int maxDistance(vector<vector<int>>& grid) {
+        vector<pair<int, int>> vec;
+        int n = grid.size();
+        bool zero = false;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j]) vec.push_back({i, j});
+                else zero = true;
+            }
+        }
+        if(vec.size() == 0 || !zero) return -1;
+        int ans = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == 0){
+                    int tmp = INT_MAX;
+                    for(auto k : vec){
+                        int dist = abs(k.first - i) + abs(k.second-j);
+                        tmp = min(tmp, dist);
+                    }
+                    ans = max(ans, tmp);
+                }
+            }
+        }
+        return ans;
+    }
+};
