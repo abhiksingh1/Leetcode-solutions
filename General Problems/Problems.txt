@@ -402,3 +402,33 @@ public:
         return ans;
     }
 };
+
+2477. Minimum Fuel Cost to Report to the Capital
+
+class Solution {
+public:
+    long long ans;
+    long long minimumFuelCost(vector<vector<int>>& roads, int seats) {
+        int n = roads.size()+1;
+        vector<vector<int>> graph(n);
+        for(auto r : roads){
+            graph[r[0]].push_back(r[1]);
+            graph[r[1]].push_back(r[0]);
+        }
+        rec(graph, seats, 0, -1);
+        return ans;
+    }
+    long long rec(vector<vector<int>> &graph, int &seats, int u, int parent){
+        int curr = 1;
+        for(auto v : graph[u]){
+            if(v != parent){
+                curr += rec(graph, seats, v, u);
+            }
+        }
+        if(u != 0){
+            ans += ceil((double)curr/seats);
+        }
+        return curr;
+    }
+    
+};
