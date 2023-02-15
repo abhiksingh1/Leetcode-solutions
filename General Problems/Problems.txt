@@ -466,3 +466,55 @@ public:
         return res;
     }
 };
+
+
+
+989. Add to Array-Form of Integer
+
+class Solution {
+public:
+    vector<int> addToArrayForm(vector<int>& num, int k) {
+        int i = num.size()-1;
+        int rem = 0;
+        while(i >= 0 && k > 0){
+            rem += (num[i]+k%10);
+            if(rem < 10){
+                num[i] = rem;
+                rem = 0;
+            } else{
+                num[i] = rem%10;
+                if(rem == 10) rem = 1;
+                else rem /= 10;
+            }
+            k /= 10;
+            i--;
+        }
+        while(i >= 0){
+            rem += num[i];
+            if(rem < 10){
+                num[i] = rem;
+                rem = 0;
+                break;
+            }else{
+                num[i] = rem%10;
+                rem /= 10;
+            }
+            k /= 10;
+            i--;
+        }
+        while(k){
+            rem += k%10;
+            if(rem < 10){
+                num.insert(num.begin(), rem%10);
+                rem = 0;
+            }else {
+                num.insert(num.begin(), rem%10);
+                if(rem == 10) rem = 1;
+                else rem /= 10;
+            }
+            k /= 10;
+        }
+        if(rem)num.insert(num.begin(), rem);
+        return num;
+    }
+};
