@@ -672,3 +672,28 @@ public:
         return nums[l];
     }
 };
+
+
+1011. Capacity To Ship Packages Within D Days
+
+class Solution {
+public:
+    int shipWithinDays(vector<int>& weights, int days) {
+        int r = accumulate(weights.begin(), weights.end(), 0);
+        int l = max(r/days, *max_element(weights.begin(), weights.end()));
+        while(l < r){
+            int mid = l + (r-l)/2;
+            if(possible(weights, days, mid)) r = mid;
+            else l = mid+1;
+        }
+        return l;
+    }
+    bool possible(vector<int> weights, int days, int mid){
+        int currsum = 0, ans = 1;
+        for(auto w : weights){
+            currsum += w;
+            if(currsum > mid) ans++, currsum = w;
+        }
+        return ans <= days;
+    }
+};
