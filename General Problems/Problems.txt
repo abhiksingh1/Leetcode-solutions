@@ -756,3 +756,19 @@ public:
         return ans;
     }
 };
+
+
+121. Best Time to Buy and Sell Stock
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        int ans = 0, mn = INT_MAX;
+        for(int i = 0; i < n; i++){
+            mn = min(mn, prices[i]);
+            ans = max(ans, prices[i]-mn);
+        }
+        return ans;
+    }
+};
