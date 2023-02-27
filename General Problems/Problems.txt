@@ -793,3 +793,75 @@ public:
         return dp[n1][n2];
     }
 };
+
+
+
+/*
+// Definition for a QuadTree node.
+class Node {
+public:
+    bool val;
+    bool isLeaf;
+    Node* topLeft;
+    Node* topRight;
+    Node* bottomLeft;
+    Node* bottomRight;
+    
+    Node() {
+        val = false;
+        isLeaf = false;
+        topLeft = NULL;
+        topRight = NULL;
+        bottomLeft = NULL;
+        bottomRight = NULL;
+    }
+    
+    Node(bool _val, bool _isLeaf) {
+        val = _val;
+        isLeaf = _isLeaf;
+        topLeft = NULL;
+        topRight = NULL;
+        bottomLeft = NULL;
+        bottomRight = NULL;
+    }
+    
+    Node(bool _val, bool _isLeaf, Node* _topLeft, Node* _topRight, Node* _bottomLeft, Node* _bottomRight) {
+        val = _val;
+        isLeaf = _isLeaf;
+        topLeft = _topLeft;
+        topRight = _topRight;
+        bottomLeft = _bottomLeft;
+        bottomRight = _bottomRight;
+    }
+};
+*/
+
+
+
+
+427. Construct Quad Tree
+
+class Solution {
+public:
+    Node* construct(vector<vector<int>>& grid) {
+        int n = grid.size();
+        return rec(grid, 0, n-1, 0, n-1);
+    }
+    Node* rec(vector<vector<int>>&grid, int l, int r, int t, int b){
+        if(l == r || t == b) return new Node(grid[t][l], true);
+        Node *root = new Node(1, false);
+        root->topLeft = rec(grid, l, (r+l)/2, t, (b+t)/2);
+        root->topRight = rec(grid, (r+l)/2+1, r, t, (b+t)/2);
+        root->bottomLeft = rec(grid, l, (r+l)/2, (b+t)/2+1, b);
+        root->bottomRight = rec(grid, (r+l)/2+1, r, (b+t)/2+1, b);
+        if(root->topLeft->val == root->topRight->val && 
+           root->topLeft->val == root->bottomLeft->val &&
+           root->topLeft->val == root->bottomRight->val &&
+           root->topLeft->isLeaf && root->topRight->isLeaf &&
+           root->bottomLeft->isLeaf && root->bottomRight->isLeaf)
+           {
+            return new Node(root->topLeft->val, true);
+        }
+        return root;
+    }
+};
