@@ -931,3 +931,33 @@ public:
         for(int i = low; i <= high; i++)nums[i] = aux[i];
     }
 };
+
+
+
+
+443. String Compression
+
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        int cnt = 0, n = chars.size(), i = 0;
+        vector<char> v;
+        while(i < n){
+            int j = i+1, tmp = 1;
+            char c = chars[i];
+            while(j < n && chars[j] == c)j++, tmp++;
+            if(tmp == 1)cnt++, i++, v.push_back(c);
+            else if(tmp == 2)cnt+=2, i = j, v.push_back(c), v.push_back('2');
+            else {
+                v.push_back(c), cnt++;
+                string s = to_string(tmp);
+                for(auto ch : s){
+                    v.push_back(ch), cnt++;
+                }
+                i = j;
+            }
+        }
+        chars = v;
+        return cnt;
+    }
+};
