@@ -1130,3 +1130,31 @@ public:
         return r;
     }
 };
+
+
+
+
+
+142. Linked List Cycle II
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        unordered_set<ListNode*> s;
+        ListNode *tmp = head;
+        while(tmp){
+            if(s.find(tmp) != s.end())return tmp;
+            s.insert(tmp);
+            tmp = tmp->next;
+        }
+        return NULL;
+    }
+};
