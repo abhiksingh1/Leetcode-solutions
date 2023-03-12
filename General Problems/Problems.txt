@@ -1248,3 +1248,54 @@ public:
         return root;
     }
 };
+
+
+
+
+23. Merge k Sorted Lists
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *ans = NULL, *tmp = NULL;
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        int n = lists.size(), cnt = 0;
+        while(cnt != n){
+            ListNode *tmp = new ListNode(INT_MAX);
+            for(int i = 0; i < n; i++){
+                if(lists[i] == NULL)cnt++;
+                else{
+                    if(lists[i]->val < tmp->val)tmp = lists[i];
+                }
+            }
+            if(cnt != n){
+                cnt = 0;
+                for(int i = 0; i < n; i++){
+                    if(lists[i] != NULL && lists[i]->val == tmp->val){
+                        lists[i] = lists[i]->next; cnt++;
+                    }
+                }
+                while(cnt > 0)addNode(tmp->val), cnt--;
+            }
+        }
+        return ans;
+    }
+    void addNode(int val){
+        if(ans == NULL){
+            ans = new ListNode(val);
+            tmp = ans;
+        }else{
+            tmp -> next = new ListNode(val);
+            tmp = tmp->next;
+        }
+    }
+};
