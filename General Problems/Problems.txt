@@ -1407,3 +1407,47 @@ public:
         return 1 + max(dfs(root->left), dfs(root->right));
     }
 };
+
+
+
+
+
+
+
+106. Construct Binary Tree from Inorder and Postorder Traversal
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> inorder, postorder;
+    unordered_map<int, int> mp;
+    int postIndx;
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        this->inorder = inorder, this->postorder = postorder;
+        postIndx = postorder.size() - 1;
+        int indx = 0;
+        for(int val : inorder)mp[val] = indx++;
+        return dfs(0, inorder.size()-1);
+    }
+    TreeNode* dfs(int inLeft, int inRght){
+        if(inLeft > inRght)return NULL;
+        int val = postorder[postIndx];
+        TreeNode *root = new TreeNode(val);
+        int indx = mp[val];
+        postIndx--;
+        root->right = dfs(indx+1, inRght);
+        root->left = dfs(inLeft, indx-1);
+        return root;
+    }
+};
