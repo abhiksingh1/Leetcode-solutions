@@ -1451,3 +1451,65 @@ public:
         return root;
     }
 };
+
+
+
+
+
+208. Implement Trie (Prefix Tree)
+
+
+
+class node{
+    public:
+    unordered_map<char, node*> mp;
+    bool end = false;
+};
+
+
+
+class Trie {
+public:
+    
+    node *root;
+    node *curr;
+    
+    Trie() {
+         root = new node;
+    }
+    
+    void insert(string word) {
+        curr = root;
+        for(char c : word){
+            if(!curr -> mp.count(c))curr -> mp[c] = new node;
+            curr = curr-> mp[c];
+        }
+        curr -> end = true;
+    }
+    
+    bool search(string word) {
+        curr = root;
+        for(char c : word){
+            if(!curr-> mp.count(c))return false;
+            curr = curr->mp[c];
+        }
+        return curr -> end;
+    }
+    
+    bool startsWith(string prefix) {
+        curr = root;
+        for(char c : prefix){
+            if(!curr-> mp.count(c))return false;
+            curr = curr->mp[c];
+        }
+        return true;
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
