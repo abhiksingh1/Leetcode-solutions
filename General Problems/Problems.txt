@@ -1513,3 +1513,48 @@ public:
  * bool param_2 = obj->search(word);
  * bool param_3 = obj->startsWith(prefix);
  */
+
+
+
+
+1472. Design Browser History
+
+
+ class BrowserHistory {
+public: 
+    vector<string> vec;
+    int indx;
+    BrowserHistory(string homepage) {
+        vec.push_back(homepage); 
+        indx = 0;   
+    }
+    
+    void visit(string url) {
+        int n = vec.size()-1;
+        while(n-- > indx){
+            vec.pop_back();
+        }
+        indx++;
+        vec.push_back(url);
+    }
+    
+    string back(int steps) {
+        indx -= steps;
+        if(indx < 0) indx = 0;
+        return vec[indx];
+    }
+    
+    string forward(int steps) {
+        indx += steps;
+        if(indx >= vec.size()) indx = vec.size()-1;
+        return vec[indx];
+    }
+};
+
+/**
+ * Your BrowserHistory object will be instantiated and called as such:
+ * BrowserHistory* obj = new BrowserHistory(homepage);
+ * obj->visit(url);
+ * string param_2 = obj->back(steps);
+ * string param_3 = obj->forward(steps);
+ */
