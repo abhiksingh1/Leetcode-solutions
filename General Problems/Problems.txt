@@ -1734,3 +1734,37 @@ public:
         }
     }
 };
+
+
+
+
+1466. Reorder Routes to Make All Paths Lead to the City Zero
+
+
+class Solution {
+public:
+    set<pair<int, int>> s;
+    int ans = 0;
+
+    int minReorder(int n, vector<vector<int>>& connections) {
+        vector<int> graph[n];
+        vector<bool> vis(n, false);
+        for(auto i : connections){
+            s.insert({i[0], i[1]});
+            graph[i[0]].push_back(i[1]);
+            graph[i[1]].push_back(i[0]);
+        }
+        dfs(graph, vis, 0, -1);
+        return ans;
+    }
+    
+    void dfs(vector<int> *graph, vector<bool> &vis, int src, int par){
+        vis[src] = true;
+        for(auto i : graph[src]){
+            if(!vis[i]){
+                if(s.find({src, i}) != s.end())ans++;
+                dfs(graph, vis, i, src);
+            }
+        }
+    }
+};
