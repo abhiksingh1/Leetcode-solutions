@@ -1768,3 +1768,44 @@ public:
         }
     }
 };
+
+
+
+
+
+2316. Count Unreachable Pairs of Nodes in an Undirected Graph
+
+
+class Solution {
+public:
+    long long countPairs(int n, vector<vector<int>>& edges) {
+        vector<vector<int>> graph(n);
+        for(auto e : edges)graph[e[0]].push_back(e[1]), graph[e[1]].push_back(e[0]);
+        vector<bool> vis(n, false);
+        vector<int> vec;
+        for(int i = 0; i < n; i++){
+            if(!vis[i]){
+                int cnt = 1;
+                vis[i] = true;
+                queue<int> q; q.push(i);
+                while(!q.empty()){
+                    int tmp = q.front(); q.pop();
+                    for(int j : graph[tmp]){
+                        if(!vis[j]){
+                            vis[j] = true;
+                            q.push(j);
+                            cnt++;
+                        }
+                    }
+                }
+                vec.push_back(cnt);
+            }
+        }
+        long long cntn = vec.size(), ans = 0, total = 0;
+        for(int i = 0; i < cntn; i++){
+            ans += 1LL*(vec[i]*(n-total-vec[i]));
+            total += vec[i];
+        } 
+        return ans;
+    }
+};
