@@ -1809,3 +1809,67 @@ public:
         return ans;
     }
 };
+
+
+
+
+
+
+
+
+
+
+2360. Longest Cycle in a Graph
+
+
+
+class Solution {
+    public int longestCycle(int[] edges) {
+        int n = edges.length;
+        int maxCycleLength = -1;
+        boolean[] visited = new boolean[n];
+        
+        for(int i=0;i<n;i++){
+            if(!visited[i]){
+                Map<Integer, Integer> nodeToLevel = new HashMap<>();
+                int cycleLength = bfs(i, edges, visited, nodeToLevel);
+                maxCycleLength = Math.max(maxCycleLength, cycleLength);
+            }
+        }
+        
+        return maxCycleLength;
+    }
+    
+    private int bfs(int node, int[] edges, boolean[] visited, Map<Integer, Integer> nodeToLevel){
+        int level = 0;
+        Queue<Integer> q = new LinkedList<>();
+        q.add(node);
+        visited[node] = true;
+        int maxLevel = -1;
+        
+        while(!q.isEmpty()){
+            int size = q.size();
+            for(int i=0;i<size;i++){
+                int parent = q.poll();
+                nodeToLevel.put(parent, level);
+                int child = edges[parent];
+                if(child != -1){
+                    if(!visited[child]){
+                        q.add(child);
+                        visited[child] = true;
+                    }
+                    else{
+                        int preLevel = nodeToLevel.getOrDefault(child, -1);
+                        if(preLevel != -1){
+                            int diff = level-preLevel+1;
+                            maxLevel = Math.max(maxLevel, diff);
+                        }
+                    }
+                }
+            }
+            level++;
+        }
+        
+        return maxLevel;
+    }
+}
