@@ -1873,3 +1873,26 @@ class Solution {
         return maxLevel;
     }
 }
+
+
+
+
+
+
+64. Minimum Path Sum
+
+
+class Solution {
+public:
+    int dp[205][205] = {};
+    int minPathSum(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        return rec(grid, m-1, n-1);
+    }
+    int rec(vector<vector<int>> &grid, int m, int n){
+        if(m < 0 || n < 0) return INT_MAX;
+        if(m == 0 && n == 0) return grid[m][n];
+        if(dp[m][n]) return dp[m][n];
+        return dp[m][n] = grid[m][n] + min(rec(grid, m-1, n), rec(grid, m, n-1));
+    }
+};
