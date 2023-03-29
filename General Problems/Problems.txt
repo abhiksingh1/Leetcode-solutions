@@ -1923,3 +1923,25 @@ public:
         return dp[i] = min(a, min(b, c));
     }
 };
+
+
+
+
+
+1402. Reducing Dishes
+
+
+class Solution {
+public:
+    int dp[505][505];
+    int maxSatisfaction(vector<int>& satisfaction) {
+        memset(dp, -1, sizeof dp);
+        sort(satisfaction.begin(), satisfaction.end());
+        return rec(satisfaction, 0, 1);
+    }
+    int rec(vector<int>&satisfaction, int indx, int time){
+        if(indx == satisfaction.size()) return 0;
+        if(dp[indx][time] != -1) return dp[indx][time];
+        return dp[indx][time] = max(time*satisfaction[indx]+rec(satisfaction, indx+1, time+1), rec(satisfaction, indx+1, time));
+    }
+};
