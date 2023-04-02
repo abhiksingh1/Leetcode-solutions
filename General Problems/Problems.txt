@@ -2037,3 +2037,30 @@ public:
         return -1;
     }
 };
+
+
+
+
+
+2300. Successful Pairs of Spells and Potions
+
+
+class Solution {
+public:
+    vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+        int m = potions.size();
+        sort(potions.begin(), potions.end());
+        int mx = potions[m-1];
+        vector<int> ans;
+        for(int spell : spells){
+            long long div = ceil((1.0*success)/spell);
+            if(div > mx){
+                ans.push_back(0);
+                continue;
+            }
+            auto indx = lower_bound(potions.begin(), potions.end(), div) - potions.begin();
+            ans.push_back(m-indx);
+        }
+        return ans;
+    }
+};
