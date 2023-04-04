@@ -2090,3 +2090,27 @@ public:
         return ans;
     }
 };
+
+
+
+
+
+
+2405. Optimal Partition of String
+
+
+class Solution {
+public:
+    int partitionString(string s) {
+        int cnt = 1;
+        unordered_set<char> us;
+        for(auto ch : s){
+            if(us.find(ch) != us.end()){
+                cnt++;
+                us.clear();
+            }
+            us.insert(ch);
+        }
+        return cnt;
+    }
+};
