@@ -2165,3 +2165,51 @@ public:
         rec(grid,i,j+1);
     }
 };
+
+
+
+
+
+
+
+1020. Number of Enclaves
+
+
+
+class Solution {
+public:
+    int dx[4] = {0, 0, 1, -1};
+    int dy[4] = {-1, 1, 0, 0};
+
+    int numEnclaves(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        if(m <= 2 || n <= 2) return 0;
+        vector<vector<bool>> vis(m, vector<bool>(n));
+
+        for(int i = 0; i < m; i++){
+            if(grid[i][0] && !vis[i][0]) dfs(grid, vis, m, n, i, 0);
+            if(grid[i][n-1] && !vis[i][n-1]) dfs(grid, vis, m, n, i, n-1);
+        }
+        for(int i = 0; i < n; i++){
+            if(grid[0][i] && !vis[0][i]) dfs(grid, vis, m, n, 0, i);
+            if(grid[m-1][i] && !vis[m-1][i]) dfs(grid, vis, m, n, m-1, i);
+        }
+        
+        int cnt = 0;
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] && !vis[i][j])cnt++;
+            }
+        }
+        return cnt;
+    }
+
+    void dfs(vector<vector<int>>&grid, vector<vector<bool>>&vis, int m, int n, int x, int y){
+        if(x < 0 || x >= m || y < 0 || y >= n || !grid[x][y] || vis[x][y]) return;
+        vis[x][y] = true;
+        for(int i = 0; i < 4; i++){
+            dfs(grid, vis, m, n, x+dx[i], y+dy[i]);
+        }
+        return;
+    }
+};
