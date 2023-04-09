@@ -2257,3 +2257,41 @@ public:
         return ans;
     }
 };
+
+
+
+
+
+
+
+1857. Largest Color Value in a Directed Graph
+
+
+class Solution {
+public:
+    int largestPathValue(string cs, vector<vector<int>>& edges) {
+        int n = cs.size();
+        vector<vector<int>> graph(n), cnt(n, vector<int>(26));
+        vector<int> indeg(n);
+        for (auto &e: edges) {
+            graph[e[0]].push_back(e[1]);
+            indeg[e[1]]++;
+        }
+        queue<int> q;
+        for (int i = 0; i < n; ++i)if(indeg[i] == 0) q.push(i);
+        int ans = 0, processed = 0;
+        while (!q.empty()) {
+            int sz = q.size();
+            for(int i = 0; i < sz; i++){
+                int u = q.front(); q.pop();
+                processed++;
+                ans = max(ans, ++cnt[u][cs[u]-'a']);
+                for(auto v : graph[u]){
+                    for(int k = 0; k < 26; k++) cnt[v][k] = max(cnt[v][k], cnt[u][k]);
+                    if(--indeg[v] == 0) q.push(v);
+                }
+            }
+        }
+        return processed != n ? -1 : ans;
+    }
+};
