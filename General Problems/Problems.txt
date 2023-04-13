@@ -2382,3 +2382,30 @@ public:
         return ans;
     }
 };
+
+
+
+
+946. Validate Stack Sequences
+
+
+class Solution {
+public:
+    bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+        stack<int> s;
+        int p_front = popped[0];
+        int i = 0, j = 0, npush = pushed.size(), npop = popped.size();
+        while(pushed[i] != p_front && i < npush)s.push(pushed[i]), i++;
+        while(i < npush || j < npop){
+            if(i < npush && j < npop && pushed[i] == popped[j]){
+                i++, j++;
+            }else if(!s.empty() && j < npop && s.top() == popped[j]){
+                s.pop(); j++;
+            }else if(i < npush){
+                 s.push(pushed[i]); 
+                 i++;
+            }else return false;
+        }
+        return true;
+    }
+};
