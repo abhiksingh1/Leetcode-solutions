@@ -2409,3 +2409,31 @@ public:
         return true;
     }
 };
+
+
+
+
+
+
+
+
+
+516. Longest Palindromic Subsequence
+
+
+
+class Solution {
+public:
+    int dp[1005][1005];
+    int longestPalindromeSubseq(string s) {
+        int n = s.size();
+        return rec(s, 0, n-1);
+    }
+    int rec(string &s, int i, int n){
+        if(i > n) return 0;
+        if(i == n) return 1;
+        if(dp[i][n]) return dp[i][n];
+        if(s[i] == s[n]) return dp[i][n] = 2 + rec(s, i+1, n-1);
+        return dp[i][n] = max(rec(s, i+1, n), rec(s, i, n-1));
+    }
+};
