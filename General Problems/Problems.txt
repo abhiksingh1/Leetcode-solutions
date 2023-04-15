@@ -2437,3 +2437,32 @@ public:
         return dp[i][n] = max(rec(s, i+1, n), rec(s, i, n-1));
     }
 };
+
+
+
+
+
+
+2218. Maximum Value of K Coins From Piles
+
+
+class Solution {
+public:
+    int dp[1005][2005];
+    int n;
+    int maxValueOfCoins(vector<vector<int>>& piles, int k) {
+        memset(dp, -1, sizeof dp);
+        n = piles.size();
+        return rec(piles, k, 0);
+    }
+    int rec(vector<vector<int>> &piles, int k, int i){          
+        if(i == n || k == 0) return 0;
+        if(dp[i][k] != -1) return dp[i][k];
+        int ans = rec(piles, k, i+1), curr = 0;
+        for(int j = 0; j < piles[i].size() && j < k; j++){
+            curr += piles[i][j];
+            ans = max(ans, curr+rec(piles, k-j-1, i+1));
+        }
+        return dp[i][k] = ans;
+    }
+};
