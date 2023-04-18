@@ -2500,3 +2500,54 @@ public:
         return dp[i][k] = res = (res+rec(i, k+1, target))%mod;
     }
 };
+
+
+
+
+
+
+
+
+
+1431. Kids With the Greatest Number of Candies
+
+
+class Solution {
+public:
+    vector<bool> kidsWithCandies(vector<int>& candies, int extraCandies) {
+        int mx = 0;
+        for(auto candy : candies) mx = max(mx, candy);
+        vector<bool> ans;
+        for(auto candy : candies) {
+            if(candy+extraCandies >= mx) ans.push_back(true);
+            else ans.push_back(false);
+        }
+        return ans;
+    }
+};
+
+
+
+
+
+
+
+1768. Merge Strings Alternately
+
+
+
+class Solution {
+public:
+    string mergeAlternately(string word1, string word2) {
+        int n1 = word1.size(), n2 = word2.size();
+        string ans = "";
+        int n = min(n1, n2);
+        for(int i = 0; i < n; i++){
+            ans += word1[i];
+            ans += word2[i];
+        }
+        if(n == n1)ans += word2.substr(n);
+        if(n == n2)ans += word1.substr(n);
+        return ans;
+    }
+};
