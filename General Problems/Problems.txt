@@ -2594,3 +2594,52 @@ public:
         }
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+662. Maximum Width of Binary Tree
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int widthOfBinaryTree(TreeNode* root) {
+        if(!root) return 0;
+        queue<pair<TreeNode*, long>> q;
+        q.push({root, 1});
+        int ans = 0, first, last, diff;
+        while(!q.empty()){
+            int n = q.size(); 
+            for(int i = 0; i < n; i++){
+                auto [tmp, indx] = q.front(); q.pop();
+                if(i == 0){
+                    first = indx, diff = indx-1;
+                }
+                if(i == n-1) last = indx;
+                indx -= diff;
+                if(tmp->left)q.push({tmp->left, 2*indx-1});
+                if(tmp->right)q.push({tmp->right, 2*indx});
+            }
+            ans = max(ans, last-first+1);
+        }
+        return ans;
+    }
+};
