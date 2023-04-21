@@ -2643,3 +2643,32 @@ public:
         return ans;
     }
 };
+
+
+
+
+
+
+
+
+879. Profitable Schemes
+
+
+class Solution {
+public:
+    int mod = 1e9+7;
+    int dp[101][101][101];
+    int profitableSchemes(int n, int mp, vector<int>& group, vector<int>& profit) {
+        memset(dp, -1, sizeof dp);
+        return rec(0, n, mp, group, profit);
+    }
+    int rec(int i, int n, int mp, vector<int> &group, vector<int>& profit){
+        if(n < 0) return 0;
+        if(i == group.size()){
+            if(mp == 0) return 1;
+            return 0;
+        }
+        if(dp[i][n][mp] != -1) return dp[i][n][mp];
+        return dp[i][n][mp] = (rec(i+1, n, mp, group, profit) + rec(i+1, n-group[i], max(0, mp-profit[i]), group, profit)) % mod;
+    }
+};
