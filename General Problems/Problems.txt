@@ -2672,3 +2672,30 @@ public:
         return dp[i][n][mp] = (rec(i+1, n, mp, group, profit) + rec(i+1, n-group[i], max(0, mp-profit[i]), group, profit)) % mod;
     }
 };
+
+
+
+
+
+
+1312. Minimum Insertion Steps to Make a String Palindrome
+
+
+
+class Solution {
+public:
+    int dp[501][501];
+    int minInsertions(string s) {
+        memset(dp, -1, sizeof dp);
+        int n = s.size();
+        string ss = s;
+        reverse(ss.begin(), ss.end());
+        return n-rec(ss, s, n, n);
+    }
+    int rec(string &s1, string &s2, int n1, int n2){
+        if(n1 == 0 || n2 == 0) return 0;
+        if(dp[n1][n2] != -1) return dp[n1][n2];
+        if(s1[n1-1] == s2[n2-1]) return dp[n1][n2] = 1 + rec(s1, s2, n1-1, n2-1);
+        else return dp[n1][n2] = max(rec(s1, s2, n1-1, n2), rec(s1, s2, n1, n2-1));
+    }
+};
