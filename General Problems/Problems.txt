@@ -2699,3 +2699,33 @@ public:
         else return dp[n1][n2] = max(rec(s1, s2, n1-1, n2), rec(s1, s2, n1, n2-1));
     }
 };
+
+
+
+
+
+1416. Restore The Array
+
+
+class Solution {
+public:
+    int mod = 1e9+7;
+    int solve(string& s, int& k, vector<int>&dp, int startIdx){
+        if (startIdx == s.size()) return 1;
+        if (dp[startIdx] != -1) return dp[startIdx]; 
+        long long currNum = 0, ways = 0;
+        for (int i = startIdx; i < s.size(); i++){
+            int currDig = s[i] - '0';
+            currNum = (currNum * 10) + currDig; 
+            if (currNum < 1 || currNum > k) break;
+            int nextWays = solve(s, k, dp, i + 1);
+            ways = (ways +  nextWays) % mod;
+        }
+        return dp[startIdx] = ways; 
+    }
+    int numberOfArrays(string s, int k) {
+        vector<int>dp(s.size(), -1);
+        int ans = solve(s, k, dp, 0);
+        return ans;
+    }
+};
