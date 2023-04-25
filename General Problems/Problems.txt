@@ -2751,3 +2751,44 @@ public:
         return pq.empty() ? 0 : pq.top();
     }
 };
+
+
+
+
+
+
+
+
+
+2336. Smallest Number in Infinite Set
+
+
+
+class SmallestInfiniteSet {
+public:
+    unordered_set<int> us;
+    SmallestInfiniteSet() {
+        
+    }
+    
+    int popSmallest() {
+        int i;
+        for(i = 1; i < INT_MAX; i++){
+            if(us.count(i)) continue;
+            else break;
+        }
+        us.insert(i);
+        return i;
+    }
+    
+    void addBack(int num) {
+        us.erase(num);
+    }
+};
+
+/**
+ * Your SmallestInfiniteSet object will be instantiated and called as such:
+ * SmallestInfiniteSet* obj = new SmallestInfiniteSet();
+ * int param_1 = obj->popSmallest();
+ * obj->addBack(num);
+ */
