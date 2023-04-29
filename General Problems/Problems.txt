@@ -2886,3 +2886,41 @@ public:
         }
     }
 };
+
+
+
+
+
+
+
+
+
+1697. Checking Existence of Edge Length Limited Paths
+
+
+
+
+class Solution {
+public:
+    vector<int> parent;
+    vector<bool> distanceLimitedPathsExist(int n, vector<vector<int>>& el, vector<vector<int>>& qs) {
+        for(int i = 0; i < n; i++) parent.push_back(i);
+        sort(el.begin(), el.end(), [](auto &a, auto &b){return a[2] < b[2];});
+        int sz = qs.size();
+        vector<int> indx;
+        for(int i = 0; i < sz; i++) indx.push_back(i);
+        sort(indx.begin(), indx.end(), [&](int a, int b){return qs[a][2] < qs[b][2];});
+        int x = 0;
+        vector<bool> ans(sz);
+        for(auto &i : indx){
+            for(; x < el.size() && el[x][2] < qs[i][2]; x++) parent[find(el[x][0])] = find(el[x][1]);
+            ans[i] = find(qs[i][0]) == find(qs[i][1]);
+        }
+        return ans;
+    }
+    
+    int find(int x){
+        if(x == parent[x]) return x;
+        return parent[x] = find(parent[x]);
+    }
+};
