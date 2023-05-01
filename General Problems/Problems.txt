@@ -2982,3 +2982,30 @@ public:
         return 1;
     }
 };
+
+
+
+
+
+
+
+1491. Average Salary Excluding the Minimum and Maximum Salary
+
+
+class Solution {
+public:
+    double average(vector<int>& salary) {
+        int n = salary.size();
+        if(n <= 2) return 0.0;
+        double sum = salary[0];
+        int low = salary[0], high = salary[0];
+        for(int i = 1; i < n; i++){
+            sum += salary[i];
+            low = min(low, salary[i]);
+            high = max(high, salary[i]);
+        }
+        sum -= low;
+        sum -= high;
+        return sum/(n-2);
+    }
+};
