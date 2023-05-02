@@ -3009,3 +3009,28 @@ public:
         return sum/(n-2);
     }
 };
+
+
+
+
+
+
+
+
+1822. Sign of the Product of an Array
+
+
+
+class Solution {
+public:
+    int arraySign(vector<int>& nums) {
+        int cnt = 0;
+        for(int i : nums){
+            if(i < 0){
+                cnt++;
+            }else if(i == 0) return 0;
+        }
+        if(cnt&1) return -1;
+        return 1;
+    }
+};
