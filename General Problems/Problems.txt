@@ -3092,3 +3092,34 @@ public:
         return qr.empty() ? "Dire" : "Radiant";
     }
 };
+
+
+
+
+
+
+
+1456. Maximum Number of Vowels in a Substring of Given Length
+
+
+class Solution {
+public:
+    int maxVowels(string s, int k) {
+        int n = s.size(), ans = 0, cnt = 0;
+        for(int i = 0; i < n; i++){
+            char c = s[i];
+            if(i >= k){
+                if(checkVowel(c))cnt++;
+                if(checkVowel(s[i-k]))cnt--;    
+            }else{
+                if(checkVowel(c))cnt++;
+            }
+            ans = max(ans, cnt);
+        }
+        return ans;
+    }
+    bool checkVowel(char c){
+        if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') return true;
+        return false;
+    }
+};
