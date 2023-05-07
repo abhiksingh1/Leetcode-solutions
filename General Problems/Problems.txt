@@ -3151,3 +3151,29 @@ public:
         return ans;
     }
 };
+
+
+
+
+
+
+
+
+1964. Find the Longest Valid Obstacle Course at Each Position
+
+
+
+class Solution {
+public:
+    vector<int> longestObstacleCourseAtEachPosition(vector<int>& obstacles) {
+        int n = obstacles.size();
+        vector<int> ans(n, 1), tmp;
+        for(int i = 0; i < n; i++){
+            int indx = upper_bound(tmp.begin(), tmp.end(), obstacles[i]) - tmp.begin();
+            if(indx == tmp.size()) tmp.push_back(obstacles[i]);
+            else tmp[indx] = obstacles[i];
+            ans[i] = indx+1;
+        }
+        return ans;
+    }
+};
