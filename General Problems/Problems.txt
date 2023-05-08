@@ -3177,3 +3177,31 @@ public:
         return ans;
     }
 };
+
+
+
+
+
+
+
+
+
+1572. Matrix Diagonal Sum
+
+
+class Solution {
+public:
+    int diagonalSum(vector<vector<int>>& mat) {
+        int m = mat.size(), n = mat[0].size();
+        int sum = 0;
+        for(int i = 0; i < m; i++){
+            sum += mat[i][i];
+            mat[i][i] = 0;
+        }
+        for(int i = 0, j = n-1; i < m && j >= 0; i++, j--){
+            sum += mat[i][j];
+            mat[i][j] = 0;
+        }
+        return sum;
+    }
+};
