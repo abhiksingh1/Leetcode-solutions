@@ -3205,3 +3205,28 @@ public:
         return sum;
     }
 };
+
+
+
+
+
+
+
+311. Sparse Matrix Multiplication
+
+
+class Solution {
+public:
+    vector<vector<int>> multiply(vector<vector<int>>& mat1, vector<vector<int>>& mat2) {
+        int m1 = mat1.size(), n1 = mat1.size(), m2 = mat2.size(), n2 = mat2[0].size();
+        vector<vector<int>> ans(m1, vector<int>(n2, 0));
+        for(int i = 0; i < m1; i++){
+            for(int j = 0; j < n2; j++){
+                int sum = 0, n = mat1[i].size();
+                for(int k = 0; k < n; k++) sum += mat1[i][k] * mat2[k][j];
+                ans[i][j] = sum;
+            }
+        }
+        return ans;
+    }
+};
