@@ -3230,3 +3230,75 @@ public:
         return ans;
     }
 };
+
+
+
+
+
+
+
+
+54. Spiral Matrix
+
+
+
+
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int m = matrix.size(), n = matrix[0].size();
+        vector<int> ans;
+        int r = 0, c = 0, i;
+        while(r < m && c < n){
+            for(i = c; i < n; i++) ans.push_back(matrix[r][i]);
+            r++;
+            for(i = r; i < m; i++) ans.push_back(matrix[i][n-1]);
+            n--;
+            if(r < m){
+                for(i = n-1; i >= c; --i) ans.push_back(matrix[m-1][i]);
+                m--;
+            }
+            if(c < n){
+                for(i = m-1; i >= r; --i) ans.push_back(matrix[i][c]);
+                c++;
+            }
+        }
+        return ans;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+59. Spiral Matrix II
+
+
+
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int N) {
+        vector<vector<int>> ans(N, vector<int>(N));
+        int num = 1, i, r = 0, c = 0, m = N, n = N;
+        while(r < m && c < n){
+            for(i = c; i < n; i++)ans[r][i] = num++;
+            r++;
+            for(i = r; i < m; i++)ans[i][n-1] = num++;
+            n--;
+            if(r < m){
+                for(i = n-1; i >= c; i--)ans[m-1][i] = num++;
+                m--;
+            }
+            if(c < n){
+                for(i = m-1; i >= r; i--)ans[i][c] = num++;
+                c++;
+            }
+        }
+        return ans;
+    }
+};
