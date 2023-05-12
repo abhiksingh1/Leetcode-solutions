@@ -3330,3 +3330,29 @@ public:
         else return dp[n1][n2] = max(rec(nums1, nums2, n1-1, n2), rec(nums1, nums2, n1, n2-1));
     }
 };
+
+
+
+
+
+
+2140. Solving Questions With Brainpower
+
+
+
+class Solution {
+public:
+    int n;
+    long long mostPoints(vector<vector<int>>& questions) {
+        n = questions.size();
+        vector<long long> dp(n);
+        return rec(questions, 0, dp);
+    }
+    long long rec(vector<vector<int>>& ques, int indx, vector<long long>& dp){
+        if(indx >= n) return 0;
+        if(dp[indx] != 0) return dp[indx];
+        long long ntake = rec(ques, indx+1, dp);
+        long long take = ques[indx][0] + rec(ques, indx+ques[indx][1]+1, dp);
+        return dp[indx] = max(ntake, take);
+    }
+};
