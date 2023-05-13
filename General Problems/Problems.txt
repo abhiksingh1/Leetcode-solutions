@@ -3356,3 +3356,34 @@ public:
         return dp[indx] = max(ntake, take);
     }
 };
+
+
+
+
+
+
+
+2466. Count Ways To Build Good Strings
+
+
+class Solution {
+public:
+    int mod = 1e9+7;
+    int countGoodStrings(int low, int high, int zero, int one) {
+        vector<int> dp(high+1, -1);
+        dp[0] = 1;
+        int ans = 0;
+        for(int i = low; i <= high; i++){
+            ans += rec(dp, i, zero, one);
+            ans %= mod;
+        }
+        return ans;
+    }
+    int rec(vector<int>& dp, int end, int zero, int one){
+        if(dp[end] != -1) return dp[end];
+        int cnt = 0;
+        if(end >= one) cnt += rec(dp, end-one, zero, one);
+        if(end >= zero) cnt += rec(dp, end-zero, zero, one);
+        return dp[end] = cnt%mod;
+    }
+};
