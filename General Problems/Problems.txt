@@ -3429,3 +3429,47 @@ public:
         return gcdMemo[i][j] = __gcd(nums[i], nums[j]);
     }
 };
+
+
+
+
+
+
+
+
+
+1721. Swapping Nodes in a Linked List
+
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* swapNodes(ListNode* head, int k) {
+        int cnt = 1;
+        ListNode* tmp = head, *tmp2 = head, *kth = NULL, *nkth = NULL;
+        while(tmp){
+            if(cnt == k)break;
+            tmp = tmp-> next;
+            cnt++;
+        }
+        kth = tmp;
+        while(tmp->next){
+            tmp = tmp->next;
+            tmp2 = tmp2->next;
+        }
+        nkth = tmp2;
+        swap(kth->val, nkth->val);
+        return head;
+    }
+};
