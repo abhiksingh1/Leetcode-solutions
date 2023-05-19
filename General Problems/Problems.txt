@@ -3585,3 +3585,34 @@ public:
 
 
 
+
+
+785. Is Graph Bipartite?
+
+
+
+
+class Solution {
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n = graph.size();
+        vector<int> color(n, -1);
+        for(int i = 0; i < n; i++){
+            if(color[i] == -1){
+                queue<int> q;
+                q.push(i);
+                color[i] = 0;
+                while(!q.empty()){
+                    int parent = q.front(); q.pop();
+                    for(auto child : graph[parent]){
+                        if(color[child] == -1){
+                            color[child] = color[parent] ^ 1;
+                            q.push(child);
+                        }else if(color[child] == color[parent]) return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+};
