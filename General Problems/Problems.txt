@@ -3616,3 +3616,52 @@ public:
         return true;
     }
 };
+
+
+
+
+
+399. Evaluate Division
+
+
+
+class Solution {
+public:
+    map<string, string> parents;
+    map<string, double> vals;
+    vector<double> ans;
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        ans.resize(queries.size());
+        for(int i= 0; i < values.size(); i++)merge(equations[i][0], equations[i][1], values[i]);
+        for(int i = 0; i < queries.size(); i++){
+            string a = queries[i][0], b = queries[i][1];
+            ans[i] = (parents.find(a) != parents.end() && parents.find(b) != parents.end() && find(a) == find(b)) ? vals[a]/vals[b] : -1.0; 
+        }
+        return ans;
+    }
+    
+    string find(string s){
+        string p = (parents.find(s) != parents.end()) ? parents[s] : s;
+        if(s != p){
+            string pp = find(p);
+            vals[s] = vals[s]*vals[p];
+            parents[s] = pp;
+        }
+        return (parents.find(s) != parents.end()) ? parents[s] : s;
+    }
+    
+    void merge(string a, string b, double val){
+        if(parents.find(a) == parents.end()){
+            parents[a] = a;
+            vals[a] = 1.0;
+        }
+        if(parents.find(b) == parents.end()){
+            parents[b] = b;
+            vals[b] = 1.0;
+        }
+        
+        string pa = find(a), pb = find(b);
+        parents[pa] = pb;
+        vals[pa] = val * vals[b]/vals[a];
+    }
+};
