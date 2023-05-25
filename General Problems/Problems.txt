@@ -3834,6 +3834,28 @@ public:
 
 
 
+837. New 21 Game
+
+
+
+class Solution {
+public:
+    double new21Game(int n, int k, int mp) {
+        if(k == 0 || n >= k+mp) return 1.0;
+        vector<double> dp(n+1);
+        dp[0] = 1.0;
+        double sum = 1.0, ans = 0.0;
+        for(int i = 1; i <= n; i++){
+            dp[i] = sum/mp;
+            if(i < k) sum += dp[i];
+            else ans += dp[i];
+            if(i-mp >= 0) sum -= dp[i-mp];
+        }
+        return ans;
+    }
+};
+
+
 
 
 
