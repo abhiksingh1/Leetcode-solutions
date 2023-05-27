@@ -3890,3 +3890,36 @@ public:
 };
 
 
+
+
+
+
+
+
+
+
+1406. Stone Game III
+
+
+
+
+class Solution {
+public:
+    string stoneGameIII(vector<int>& sv) {
+        int n = sv.size();
+        vector<int> dp(n, INT_MAX);
+        int val = rec(sv, 0, n, dp);
+        return val > 0 ? "Alice" : val < 0 ? "Bob" : "Tie";
+    }
+    int rec(vector<int>& sv, int i, int n, vector<int> &dp){
+        if(i >= n) return 0;
+        if(dp[i] != INT_MAX) return dp[i];
+        int sum = sv[i];
+        int val = sum - rec(sv, i+1, n, dp);
+        for(int j = i+1; j < min(i+3, n); j++){
+            sum += sv[j];
+            val = max(val, sum - rec(sv, j+1, n, dp));
+        }
+        return dp[i] = val;
+    }
+};
