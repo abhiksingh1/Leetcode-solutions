@@ -3923,3 +3923,38 @@ public:
         return dp[i] = val;
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+1547. Minimum Cost to Cut a Stick
+
+
+
+
+
+class Solution {
+public:
+    int dp[105][105];
+    int minCost(int n, vector<int>& cuts) {
+        memset(dp, -1, sizeof dp);
+        sort(cuts.begin(), cuts.end());
+        return rec(0, n, cuts, 0, cuts.size()-1);
+    }
+    int rec(int st, int n, vector<int>&cuts, int i, int j){
+        if(i > j) return 0;
+        if(dp[i][j] != -1) return dp[i][j];
+        int ans = INT_MAX;
+        for(int k = i; k <= j; k++){
+            ans = min(ans, (n-st)+rec(st, cuts[k], cuts, i, k-1) + rec(cuts[i], n, cuts, k+1, j));
+        }
+        return dp[i][j] = ans;
+    }
+};
