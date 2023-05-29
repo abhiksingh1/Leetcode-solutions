@@ -3958,3 +3958,52 @@ public:
         return dp[i][j] = ans;
     }
 };
+
+
+
+
+
+
+
+
+
+
+1603. Design Parking System
+
+
+
+
+
+class ParkingSystem {
+public:
+    vector<int> vb, vm, vs;
+    int ib = 0, im = 0, is = 0, nb, nm, ns;
+    ParkingSystem(int big, int medium, int small) {
+        nb = big, nm = medium, ns = small;
+    }
+    
+    bool addCar(int ct) {
+        if(ct == 1){
+            if(ib == nb) return false;
+            vb.push_back(ct);
+            ib++;
+            return true;
+        }else if(ct == 2){
+            if(im == nm) return false;
+            vm.push_back(ct);
+            im++;
+            return true;
+        }else{
+            if(is == ns) return false;
+            vs.push_back(ct);
+            is++;
+            return true;
+        }
+    }
+};
+
+/**
+ * Your ParkingSystem object will be instantiated and called as such:
+ * ParkingSystem* obj = new ParkingSystem(big, medium, small);
+ * bool param_1 = obj->addCar(carType);
+ */
