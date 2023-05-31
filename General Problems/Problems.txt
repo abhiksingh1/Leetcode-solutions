@@ -4052,3 +4052,55 @@ public:
  * obj->remove(key);
  * bool param_3 = obj->contains(key);
  */
+
+
+
+
+
+
+
+1396. Design Underground System
+
+
+
+
+
+class UndergroundSystem {
+public:
+    unordered_map<string,int>total_time,total_journey;
+   
+    unordered_map<int,pair<string,int>>person;
+    UndergroundSystem() {
+        total_time.clear();
+        total_journey.clear();
+        person.clear();
+    }
+    
+    void checkIn(int id, string stationName, int t) {
+        person[id]={stationName,t};
+    }
+    
+    void checkOut(int id, string stationName, int t) {
+        string key=person[id].first+"#"+stationName;
+        total_time[key]+=(t-person[id].second);
+        
+        total_journey[key]++;
+        
+        person.erase(id);
+    }
+    
+    double getAverageTime(string startStation, string endStation) {
+        string key=startStation+"#"+endStation;
+        return (double)total_time[key]/(double)total_journey[key];
+    }
+};
+
+/**
+ * Your UndergroundSystem object will be instantiated and called as such:
+ * UndergroundSystem* obj = new UndergroundSystem();
+ * obj->checkIn(id,stationName,t);
+ * obj->checkOut(id,stationName,t);
+ * double param_3 = obj->getAverageTime(startStation,endStation);
+ */
+
+
