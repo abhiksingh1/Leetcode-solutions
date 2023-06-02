@@ -4145,3 +4145,51 @@ public:
         return grid[n][m] ? grid[n][m] : -1;
     }
 };
+
+
+
+
+
+
+2101. Detonate the Maximum Bombs
+
+
+
+
+class Solution {
+public:
+    int maximumDetonation(vector<vector<int>>& bombs) {
+        int n = bombs.size();
+        vector<vector<int>> graph(n);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(i != j && validate(bombs[i], bombs[j])) graph[i].push_back(j);
+            }
+        }
+        int ans= 0;
+        for(int i = 0; i < n; i++){
+            int cnt = 1;
+            vector<bool> vis(n, false);
+            queue<int> q;
+            q.push(i);
+            vis[i] = true;
+            while(!q.empty()){
+                int u = q.front(); q.pop();
+                for(auto v : graph[u]){
+                    if(!vis[v]){
+                        q.push(v);
+                        vis[v] = true;
+                        cnt++;
+                    }
+                }
+            }
+            ans = max(ans, cnt);
+        }
+        return ans;
+    }
+    bool validate(vector<int> &a, vector<int> &b){
+        long long x = 1LL * (a[0]-b[0]) * (a[0]-b[0]);
+        long long y = 1LL * (a[1]-b[1]) * (a[1]-b[1]);
+        return x+y <= 1LL * a[2]*a[2];
+    }
+};
