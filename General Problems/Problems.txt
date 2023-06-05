@@ -4271,3 +4271,30 @@ public:
 
 
 
+1232. Check If It Is a Straight Line
+
+
+
+
+
+class Solution {
+public:
+    bool checkStraightLine(vector<vector<int>>& c) {
+        unordered_set<int> first, second;
+        int n = c.size();
+        for(auto i : c){
+            first.insert(i[0]);
+            second.insert(i[1]);
+        }
+        if(first.size() == 1 || second.size() == 1) return true;
+        double m = (c[n-1][1]-c[0][1])/(double)(c[n-1][0]-c[0][0]);
+        for(int i = 1; i < n; i++){
+            double slope = (c[i][1]-c[0][1])/(double)(c[i][0]-c[0][0]);
+            if(slope != m) return false;
+        }
+        return true;
+    }
+};
+
+
+
