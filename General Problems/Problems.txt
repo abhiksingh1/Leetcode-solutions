@@ -4493,3 +4493,28 @@ public:
         return cnt > n/2 ? true : false;
     }
 };
+
+
+
+
+228. Summary Ranges
+
+
+
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& nums) {
+        vector<string> ans; 
+        int n = nums.size();
+        for(int i = 0; i < n; i++){
+           int curr = nums[i];
+           while(i+1 < n && nums[i+1] == nums[i]+1)i++;
+           if(curr != nums[i]){
+               ans.push_back(to_string(curr) + "->" + to_string(nums[i]));
+           }else{
+               ans.push_back(to_string(curr));
+           }
+        }
+        return ans;
+    }
+};
