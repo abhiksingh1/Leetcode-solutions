@@ -4473,3 +4473,23 @@ public:
  * int param_2 = obj->snap();
  * int param_3 = obj->get(index,snap_id);
  */
+
+
+
+
+
+1150. Check If a Number Is Majority Element in a Sorted Array
+
+
+
+
+
+ class Solution {
+public:
+    bool isMajorityElement(vector<int>& nums, int target) {
+        int n = nums.size();
+        int cnt = 0;
+        for(int i : nums) if(i == target)cnt++;
+        return cnt > n/2 ? true : false;
+    }
+};
