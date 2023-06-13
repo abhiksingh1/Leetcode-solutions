@@ -4518,3 +4518,31 @@ public:
         return ans;
     }
 };
+
+
+
+
+2352. Equal Row and Column Pairs
+
+
+
+
+
+class Solution {
+public:
+    int equalPairs(vector<vector<int>>& grid) {
+        int n = grid.size(), ans = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                int cnt = 0;
+                int x = 0, y = 0;
+                while(x < n && y < n){
+                    if(grid[i][x] == grid[y][j])x++, y++, cnt++;
+                    else break;
+                }
+                if(cnt == n)ans++;
+            }
+        }
+        return ans;
+    }
+};
